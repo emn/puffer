@@ -1,0 +1,29 @@
+so sh loop is probably just prompt > parse input > handle it > prompt
+v. helpful https://en.cppreference.com/w/c
+width-limited scanf leaves excess data in buffer. obv in retrospect. no good for stdin ig but def has use
+can't return stuff created locally (UB?) so use params
+casting to void still won't shut compiler up about unused-result so suck it up and handle it
+    unused-result error is not always triggered? not sure why.
+idiomatic to replace trailing newline from fgets() with null terminator apparently, which makes sense
+note to research alternatives to make
+sh source from unix v6 is... not easy to follow https://raw.githubusercontent.com/lsahn-org/unix-v6/2c7099ee501923775c4c96079a6fe94da109b552/source/s2/sh.c
+manpage much easier https://steve-parker.org/sh/bourne.shtml
+grammar in appendix! could implement modified subset, say:
+
+    word:
+        a sequence of non-blank characters
+    digit:
+        0 1 2 3 4 5 6 7 8 9
+    input-output:
+        > word
+        < word
+        >> word
+    item:
+        word
+        input-output
+    simple-command:
+        item
+        simple-command item
+    pipeline:
+        simple-command
+        pipeline | simple-command
